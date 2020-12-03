@@ -29,12 +29,10 @@ def file_exist():
     length = len(files)
     if length == 0:
         return f'Le dossier contient {length} image(s)'
-    return f'Le dossier contient {length} image(s)'
+    return True
 
 
-print(file_exist())
-
-
+# Create output if not already exist
 def create_output():
     if not os.path.exists('output'):
         os.mkdir('output')
@@ -62,14 +60,27 @@ def do_all_images_blur(nb):
 def do_all_images_dilate(nb):
     all_img = get_all_images_link()
     create_output()
-    print('DEBUT')
     for x in all_img:
         filter_dilate.filter_dilate(x, nb)
-    print('FINI')
+
+
+def call_filter(filter_name, nb=-1):
+    if True in (create_output(),valid_format()):
+        if filter_name == 'blur':
+            do_all_images_blur(nb)
+        elif filter_name == 'dilate':
+            do_all_images_dilate(nb)
+        elif filter_name == 'grayscale':
+            do_all_images_gray_scale()
+            print("ok")
+        else:
+            print('Filter do not exist !\nblur:<number>\ndilate:<number>\ngrayscale')
+    else:
+        return valid_format() or create_output()
+
+
+print("++++++++++++++++++++++++++++++++++")
 
 
 #do_all_images_blur(21)
 
-print("++++++++++++++++++++++++++++++++++")
-
-do_all_images_blur(39)
