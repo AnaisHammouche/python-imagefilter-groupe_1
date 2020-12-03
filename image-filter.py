@@ -1,5 +1,5 @@
 import sys
-from main import call_filter
+from main import apply_filter
 
 args = sys.argv
 
@@ -9,10 +9,7 @@ def help():
           f'-i or --input-dir <directory>\n-o --output-dir <directory>')
 
 
-arg2 = int(args[2])
-
-
 if args[1] in ('-h', '---help'):
     help()
-elif args[1] == "--filters":
-    call_filter(args[1], arg2)
+if args[1] == '--filter':
+    apply_filter(args[2])

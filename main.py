@@ -19,7 +19,7 @@ def valid_format():
     for x in all_links:
         extension = os.path.splitext('assets/' + x)
         if not (extension[1] in (".jpg", ".png")):
-            return f'L\'image {x} n\'a pas le bon format'
+            return f'The pictures {x} has wrong format'
     return True
 
 
@@ -28,7 +28,7 @@ def file_exist():
     files = get_all_images_link()
     length = len(files)
     if length == 0:
-        return f'Le dossier contient {length} image(s)'
+        return f'The directory has {length} image(s)'
     return True
 
 
@@ -38,49 +38,36 @@ def create_output():
         os.mkdir('output')
 
 
-# CALL ALL IMAGE
-def do_all_images_gray_scale():
+def apply_filter(filters, nb=None):
+    apply = filters.split('|')
+    numb = None
+    for y in apply:
+        if ":" in y:
+            numb = y.split(":")
     all_img = get_all_images_link()
     create_output()
-    print('DEBUT')
-    for x in all_img:
-        filter_gray_scale.filter_gray_scale(x)
-    print('FINI')
-
-
-def do_all_images_blur(nb):
-    all_img = get_all_images_link()
-    create_output()
-    print('DEBUT')
-    for x in all_img:
-        filter_blur.filter_blur(x, nb)
-    print('FINI')
-
-
-def do_all_images_dilate(nb):
-    all_img = get_all_images_link()
-    create_output()
-    for x in all_img:
-        filter_dilate.filter_dilate(x, nb)
-
-
-def call_filter(filter_name, nb=-1):
-    if True in (create_output(),valid_format()):
-        if filter_name == 'blur':
-            do_all_images_blur(nb)
-        elif filter_name == 'dilate':
-            do_all_images_dilate(nb)
-        elif filter_name == 'grayscale':
-            do_all_images_gray_scale()
-            print("ok")
-        else:
-            print('Filter do not exist !\nblur:<number>\ndilate:<number>\ngrayscale')
+    if file_exist() and valid_format():
+        for x in all_img:
+            image = cv2.imread('assets/' + x)
+            if 'dilate' in filters:
+                image = filter_dilate.filter_dilate(image, int(numb[1]))
+            if 'blur' in filters:
+                image = filter_blur.filter_blur(image, int(numb[1]))
+            if 'grayscale' in filters:
+                image = filter_gray_scale.filter_gray_scale(image)
+            cv2.imwrite(f'output/{x}', image)
     else:
         return valid_format() or create_output()
 
 
 print("++++++++++++++++++++++++++++++++++")
 
+# apply_filter(('grayscale', 'dilate', 'blur'), 21)
 
-#do_all_images_blur(21)
+# image = cv2.imread('assets/' + img)
 
+# cv2.imwrite(f'output/{img}', blur)
+
+# cv2.imwrite(f'output/{img}', erosion)
+
+# cv2.imwrite(f'output/{img}', gray)

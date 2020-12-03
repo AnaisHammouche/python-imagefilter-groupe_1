@@ -3,12 +3,11 @@ import cv2
 
 def filter_blur(img, nb):
     if (nb > 2) & (nb % 2 != 0):
-        image = cv2.imread('assets/' + img)
-        blur = cv2.GaussianBlur(image, (nb, nb), cv2.BORDER_DEFAULT)
-        cv2.imwrite(f'output/{img}', blur)
+        blur = cv2.GaussianBlur(img, (nb, nb), cv2.BORDER_DEFAULT)
+        return blur
     elif nb <= 1:
-        print("Valeur du flou trop faible")
+        print("Value too small")
         return None
     else:
-        print("Entrer une valeur impaire")
+        print("Please enter negative value")
         return None
