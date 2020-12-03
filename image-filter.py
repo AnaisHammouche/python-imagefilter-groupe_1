@@ -5,6 +5,9 @@ args = sys.argv
 
 
 def help():
+    '''
+    Display indication to navigate in the CLI interface
+    '''
     print(f'Usage: Image filter\n-h or ---help : To get all the commands\n'
           f'-i or --input-dir <directory>\n-o --output-dir <directory>')
 

@@ -3,11 +3,14 @@ from filters import filter_dilate
 from filters import filter_blur
 import os
 import cv2
-import numpy as np
 
 
 # VERIF FORMAT IMAGE
 def get_all_images_link():
+    '''
+    Get all the file name in the directory assets
+    :return: A Tuple with all file names
+    '''
     for files in os.walk("assets/"):
         for filename in files:
             filename
@@ -15,6 +18,10 @@ def get_all_images_link():
 
 
 def valid_format():
+    '''
+    Check for all the files if the format is correct
+    :return: True or an Error message
+    '''
     all_links = get_all_images_link()
     for x in all_links:
         extension = os.path.splitext('assets/' + x)
@@ -25,6 +32,10 @@ def valid_format():
 
 # VERIF FICHIER DANS LE DOSSIER
 def file_exist():
+    '''
+    Check if the directory assets have an file in it
+    :return: True or an Error message
+    '''
     files = get_all_images_link()
     length = len(files)
     if length == 0:
@@ -34,11 +45,18 @@ def file_exist():
 
 # Create output if not already exist
 def create_output():
+    '''
+    Check if the directory output already exist if not create it
+    '''
     if not os.path.exists('output'):
         os.mkdir('output')
 
 
-def apply_filter(filters, nb=None):
+def apply_filter(filters):
+    '''
+
+    :param filters: Tuple with the args from CLI, and apply filter for each pictures
+    '''
     apply = filters.split('|')
     numb = None
     for y in apply:
@@ -57,17 +75,4 @@ def apply_filter(filters, nb=None):
                 image = filter_gray_scale.filter_gray_scale(image)
             cv2.imwrite(f'output/{x}', image)
     else:
-        return valid_format() or create_output()
-
-
-print("++++++++++++++++++++++++++++++++++")
-
-# apply_filter(('grayscale', 'dilate', 'blur'), 21)
-
-# image = cv2.imread('assets/' + img)
-
-# cv2.imwrite(f'output/{img}', blur)
-
-# cv2.imwrite(f'output/{img}', erosion)
-
-# cv2.imwrite(f'output/{img}', gray)
+        print(valid_format() or create_output())
