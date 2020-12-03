@@ -14,5 +14,5 @@ arg2 = int(args[2])
 
 if args[1] in ('-h', '---help'):
     help()
-else:
+elif args[1] == "--filters":
     call_filter(args[1], arg2)
