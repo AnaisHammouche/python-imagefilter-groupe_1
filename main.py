@@ -121,3 +121,9 @@ def apply_filter(params):
             cv2.imwrite(f'output/{x}', image)
     else:
         print(valid_format(link_img, link_log) or create_output(link_output, link_log))
+
+
+
+
+filters_list = ["filter_blur", "filter_dilate", "filter_gray_scale"]
+print(filters_list)
