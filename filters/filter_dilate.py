@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import logger
 
 
 def filter_dilate(img, nb):
@@ -9,6 +10,7 @@ def filter_dilate(img, nb):
     :param nb: Int, value of dilate to apply
     :return: the filtered picture
     '''
+    logger.log('Apply the filter dilate')
     if nb >= 0:
         kernel = np.ones((nb, nb), np.uint8)
         erosion = cv2.erode(img, kernel, iterations=1)
